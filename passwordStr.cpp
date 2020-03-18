@@ -72,7 +72,10 @@ int numberOfCombinations(char * password) {
 
     //cout << "Total cases: " << cases << endl;
     //cout << "Password: " << passwordStr << endl << "Length: " <<   lengthOfPassword <<endl;
-    cout << "There are " << pow(cases, lengthOfPassword/*Exp*/) << " combinations" << endl;
+
+    long long int powerResult = pow(cases, lengthOfPassword/*Exp*/);
+    cout << "There are " << powerResult << " combinations" << endl;
+
 
     return cases;
 }
