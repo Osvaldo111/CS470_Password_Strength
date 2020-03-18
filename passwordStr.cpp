@@ -1,14 +1,13 @@
 /******************************************************************************
  *
- *  PROGRAM: bed.cpp
+ *  PROGRAM: PASSWORD STRENGTH
  *
- *  AUTHOR:  J. Matt Pontius
+ *  AUTHOR:  Osvaldo Carrillo
  *
- * SUMMARY: Compiles and tests user specified source code files according to the
- *          user's predefined test instructions file.  Results of the test are
- *          output to the screen and, optionally, to files if this program is
- *          run in * "grade mode".
- *
+ * SUMMARY: This program analyze the strength of a given user password. The 
+ *          program will return the number of guesses it will take the crack
+*           the password. The program also computes the bit strength of a 
+*           password.
  ******************************************************************************/
 #include <iostream>
 #include <cmath>
@@ -21,20 +20,28 @@ const int lettersUpperCase = 26;
 const int digits = 10;
 const int symbols = 32;
 
+int numberOfCombinations(char * password);
+void bitStrength(int cases, char* password);
 
-void numberOfCombinations(char * password);
 int main()
 {
 
     char* password = new char[1024];
     cout << "Please enter the password:";
     cin >> password;
-    numberOfCombinations(password);
+    int cases = numberOfCombinations(password);
+    bitStrength(cases, password);
     delete[] password;
     return 0;
 }
 
-void numberOfCombinations(char * password) {
+
+
+/******************************************************************************
+ * NUMBER OF COMBINATIONS
+ * This function returns all the possible combinations for the given password.
+ ******************************************************************************/
+int numberOfCombinations(char * password) {
     const string  isNotSpecialChar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
     int lengthOfPassword = strlen(password);
     int cases = 0;
@@ -66,4 +73,17 @@ void numberOfCombinations(char * password) {
     //cout << "Total cases: " << cases << endl;
     //cout << "Password: " << passwordStr << endl << "Length: " <<   lengthOfPassword <<endl;
     cout << "There are " << pow(cases, lengthOfPassword/*Exp*/) << " combinations" << endl;
+
+    return cases;
+}
+
+/******************************************************************************
+ * BIT STRENGTH
+ * This function determines the bit strength of the given password. 
+ ******************************************************************************/
+void bitStrength(int cases, char * password) {
+
+    int m = strlen(password); //Length of string
+    int result = log2(pow(cases, m /*Exp*/));
+    cout << "That is equivalent to a key of " << result << " bits" << endl;
 }
